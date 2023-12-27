@@ -90,6 +90,12 @@ export default function Home() {
       className="flex min-h-screen flex-col items-center justify-between p-8 bg-cover bg-center"
       style={{ backgroundImage: `url('/photo-boot-background.jpeg')` }}
     >
+      <button
+        onClick={toggleCameraFacingMode}
+        className=" p-3 rounded-md border border-white -mb-6"
+      >
+        <CameraToggleIcon />
+      </button>
       <div className="mb-32 grid text-center items-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <Webcam
           audio={false}
@@ -120,12 +126,6 @@ export default function Home() {
           <div className=" text-red-500"> Camera not available </div>
         )}
       </div>
-      <button
-        onClick={toggleCameraFacingMode}
-        className=" p-3 rounded-md border border-white"
-      >
-        <CameraToggleIcon />
-      </button>
       <div className="relative w-full flex justify-center">
         <input type="file" accept="image/*" onChange={handleFileUpload} />
         <div className="absolute w-full h-full top-0 bg-black pointer-events-none rounded-md [&>svg]:w-4 [&>svg]:h-4 flex justify-center gap-4 border-white border pt-1">
