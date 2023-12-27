@@ -22,7 +22,7 @@ export default function CarouselPage() {
     <div className=" h-[100vh] flex flex col justify-center">
       <Carousel
         autoplay
-        autoplayInterval={500}
+        autoplayInterval={10_000}
         animation="fade"
         wrapAround
         defaultControlsConfig={{
