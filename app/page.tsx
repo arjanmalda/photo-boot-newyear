@@ -3,16 +3,19 @@
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 
-const videoConstraints = {
-  width: 1280,
-  height: 720,
-  facingMode: "user",
-};
-
 export default function Home() {
   const webcamRef = useRef<Webcam>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [cameraCanBeUsed, setCameraCanBeUsed] = useState(false);
+  const [videoFacingMode, setVideoFacingMode] = useState<
+    "user" | "environment"
+  >("environment"); // Set the initial facing mode to 'environment'
+
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: videoFacingMode, // Use the videoFacingMode state to determine the facing mode
+  };
 
   const capture = () => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -35,6 +38,12 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const toggleCameraFacingMode = () => {
+    setVideoFacingMode((prevFacingMode) =>
+      prevFacingMode === "user" ? "environment" : "user"
+    ); // Toggle between 'user' and 'environment' facing mode
   };
 
   useEffect(() => {
@@ -76,6 +85,8 @@ export default function Home() {
 
         {!cameraCanBeUsed && <div> Camera not available </div>}
       </div>
+      <button onClick={toggleCameraFacingMode}>Toggle Camera</button>{" "}
+      {/* Add a button to toggle the camera facing mode */}
     </main>
   );
 }

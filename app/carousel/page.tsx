@@ -19,7 +19,7 @@ export default function CarouselPage() {
   }, []);
 
   return (
-    <div className=" h-[100vh] flex flex col justify-center">
+    <div className="w-screen flex col justify-center ">
       <Carousel
         autoplay
         autoplayInterval={10_000}
@@ -28,14 +28,16 @@ export default function CarouselPage() {
         defaultControlsConfig={{
           nextButtonStyle: { display: "none" },
           prevButtonStyle: { display: "none" },
+          pagingDotsStyle: { display: "none" },
         }}
       >
         {[...new Set(photos)].map((photo, index) => (
           <img
+            className="max-h-screen w-screen object-contain"
             key={index}
             src={photo}
             alt="carousel"
-            style={{ width: "100vw", height: "auto" }}
+            style={{ height: "auto" }}
           />
         ))}
       </Carousel>
