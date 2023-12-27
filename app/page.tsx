@@ -96,7 +96,7 @@ export default function Home() {
     >
       <button
         onClick={toggleCameraFacingMode}
-        className=" p-1 rounded-md border border-white fixed top-0 right-0"
+        className=" p-1 rounded-md border border-white fixed bottom-1 right-1"
       >
         <CameraToggleIcon />
       </button>
@@ -133,7 +133,7 @@ export default function Home() {
           <div className=" text-red-500"> Camera not available </div>
         )}
       </div>
-      <div className="relative w-full flex justify-center">
+      <div className="relative w-[90%] flex justify-center">
         <input type="file" accept="image/*" onChange={handleFileUpload} />
         <div className="absolute w-full h-full top-0 bg-black pointer-events-none rounded-md [&>svg]:w-4 [&>svg]:h-4 flex justify-center gap-4 border-white border pt-1">
           <UploadIcon />
