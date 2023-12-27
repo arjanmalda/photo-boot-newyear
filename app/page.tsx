@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Webcam, { WebcamProps } from "react-webcam";
+import { useState, useRef, useEffect } from "react";
+import Webcam from "react-webcam";
 
 const videoConstraints = {
   width: 1280,
@@ -12,6 +12,7 @@ const videoConstraints = {
 export default function Home() {
   const webcamRef = useRef<Webcam>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [cameraCanBeUsed, setCameraCanBeUsed] = useState(false);
 
   const capture = () => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -36,6 +37,21 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    async function checkCamera() {
+      if (
+        "mediaDevices" in navigator &&
+        "getUserMedia" in navigator.mediaDevices
+      ) {
+        setCameraCanBeUsed(true);
+        return;
+      }
+      setCameraCanBeUsed(false);
+    }
+
+    checkCamera();
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
@@ -48,7 +64,17 @@ export default function Home() {
           width={1280}
           screenshotQuality={1080}
         />
-        <button onClick={addPhoto}>Capture photo</button>
+        {isLoading ? (
+          <div className="w-full flex justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400" />
+          </div>
+        ) : (
+          <button disabled={isLoading} onClick={addPhoto}>
+            Capture photo
+          </button>
+        )}
+
+        {!cameraCanBeUsed && <div> Camera not available </div>}
       </div>
     </main>
   );
