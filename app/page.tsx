@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const webcamRef = useRef<Webcam>(null);
@@ -10,6 +11,7 @@ export default function Home() {
   const [videoFacingMode, setVideoFacingMode] = useState<
     "user" | "environment"
   >("environment");
+  const [imageHasBeenCaptured, setImageHasBeenCaptured] = useState(false);
 
   const videoConstraints = {
     width: 1280,
@@ -19,6 +21,7 @@ export default function Home() {
 
   const capture = () => {
     const imageSrc = webcamRef.current?.getScreenshot();
+    setImageHasBeenCaptured(true);
     return imageSrc;
   };
 
@@ -37,6 +40,7 @@ export default function Home() {
       console.error("Error adding document: ", error);
     } finally {
       setIsLoading(false);
+      setImageHasBeenCaptured(false);
     }
   };
 
@@ -97,15 +101,25 @@ export default function Home() {
         <CameraToggleIcon />
       </button>
       <div className="mb-32 grid text-center items-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          height={1000}
-          videoConstraints={videoConstraints}
-          width={1280}
-          style={{ borderRadius: "2.4rem", boxShadow: "0 0 0 5px #fff" }}
-        />
+        <motion.div
+          initial={{ scale: 1, opacity: 1 }}
+          animate={{
+            scale: imageHasBeenCaptured ? 1.01 : 1,
+            opacity: imageHasBeenCaptured ? 0.5 : 1,
+          }}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+          exit={{ scale: 1 }}
+        >
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            height={1000}
+            videoConstraints={videoConstraints}
+            width={1280}
+            style={{ borderRadius: "2.4rem", boxShadow: "0 0 0 5px #fff" }}
+          />
+        </motion.div>
         {isLoading ? (
           <div className="w-full flex justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400" />
