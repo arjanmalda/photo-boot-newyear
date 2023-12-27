@@ -96,7 +96,7 @@ export default function Home() {
     >
       <button
         onClick={toggleCameraFacingMode}
-        className=" p-3 rounded-md border border-white"
+        className=" p-1 rounded-md border border-white fixed top-0 right-0"
       >
         <CameraToggleIcon />
       </button>
