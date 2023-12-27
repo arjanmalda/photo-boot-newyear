@@ -87,7 +87,7 @@ export default function Home() {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center justify-between p-24 bg-cover bg-center"
+      className="flex min-h-screen flex-col items-center justify-between p-8 bg-cover bg-center"
       style={{ backgroundImage: `url('/photo-boot-background.jpeg')` }}
     >
       <div className="mb-32 grid text-center items-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
@@ -122,7 +122,7 @@ export default function Home() {
       </div>
       <button
         onClick={toggleCameraFacingMode}
-        className=" p-3 bg-slate-400 rounded-md"
+        className=" p-3 rounded-md border border-white"
       >
         <CameraToggleIcon />
       </button>
