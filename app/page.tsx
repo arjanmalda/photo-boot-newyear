@@ -102,8 +102,9 @@ export default function Home() {
       </button>
       <div className="mb-32 grid text-center items-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <motion.div
-          initial={{ scale: 1, opacity: 1 }}
+          initial={{ scale: 1, opacity: 1, background: "transparent" }}
           animate={{
+            zIndex: imageHasBeenCaptured ? 3 : 0,
             scale: imageHasBeenCaptured ? 1.01 : 1,
             opacity: imageHasBeenCaptured ? 0.5 : 1,
           }}
@@ -120,21 +121,13 @@ export default function Home() {
             style={{ borderRadius: "2.4rem", boxShadow: "0 0 0 5px #fff" }}
           />
         </motion.div>
-        {isLoading ? (
-          <div className="w-full flex justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400" />
-          </div>
-        ) : (
-          <>
-            <button
-              disabled={isLoading}
-              onClick={addPhoto}
-              className="[&_>_svg]:h-14 [&_>_svg]:w-14 flex justify-center py-4"
-            >
-              <CameraCaptureIcon />
-            </button>
-          </>
-        )}
+        <button
+          disabled={isLoading}
+          onClick={addPhoto}
+          className="[&_>_svg]:h-14 [&_>_svg]:w-14 flex justify-center py-4"
+        >
+          <CameraCaptureIcon />
+        </button>
 
         {cameraCanBeUsed === false && (
           <div className=" text-red-500"> Camera not available </div>
