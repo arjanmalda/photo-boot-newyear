@@ -121,13 +121,17 @@ export default function Home() {
             style={{ borderRadius: "2.4rem", boxShadow: "0 0 0 5px #fff" }}
           />
         </motion.div>
-        <button
+
+        <motion.button
           disabled={isLoading}
           onClick={addPhoto}
           className="[&_>_svg]:h-14 [&_>_svg]:w-14 flex justify-center py-4"
+          whileHover={{ scale: 1.2 }}
+          onHoverStart={(e) => {}}
+          onHoverEnd={(e) => {}}
         >
           <CameraCaptureIcon />
-        </button>
+        </motion.button>
 
         {cameraCanBeUsed === false && (
           <div className=" text-red-500"> Camera not available </div>
@@ -135,9 +139,14 @@ export default function Home() {
       </div>
       <div className="relative w-[90%] flex justify-center">
         <input type="file" accept="image/*" onChange={handleFileUpload} />
-        <div className="absolute w-full h-full top-0 bg-black pointer-events-none rounded-md [&>svg]:w-4 [&>svg]:h-4 flex justify-center gap-4 border-white border pt-1">
+        <motion.div
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          className="absolute w-full h-full top-0 bg-black pointer-events-none rounded-md [&>svg]:w-4 [&>svg]:h-4 flex justify-center gap-4 border-white border pt-1"
+        >
           <UploadIcon />
-        </div>
+        </motion.div>
       </div>
     </main>
   );
