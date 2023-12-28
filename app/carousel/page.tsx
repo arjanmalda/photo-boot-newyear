@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Carousel from "nuka-carousel";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
+import { PasswordProtection } from "@/components/PasswordProtection";
 
 export default function CarouselPage() {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -14,33 +15,34 @@ export default function CarouselPage() {
       setPhotos(newPhotos);
     });
 
-    // Clean up the subscription on unmount
     return () => unsubscribe();
   }, []);
 
   return (
-    <div className="w-screen flex col justify-center ">
-      <Carousel
-        autoplay
-        autoplayInterval={10_000}
-        animation="fade"
-        wrapAround
-        defaultControlsConfig={{
-          nextButtonStyle: { display: "none" },
-          prevButtonStyle: { display: "none" },
-          pagingDotsStyle: { display: "none" },
-        }}
-      >
-        {[...new Set(photos)].map((photo, index) => (
-          <img
-            className="max-h-screen w-screen object-contain"
-            key={index}
-            src={photo}
-            alt="carousel"
-            style={{ height: "auto" }}
-          />
-        ))}
-      </Carousel>
-    </div>
+    <PasswordProtection>
+      <div className="w-screen flex col justify-center ">
+        <Carousel
+          autoplay
+          autoplayInterval={10_000}
+          animation="fade"
+          wrapAround
+          defaultControlsConfig={{
+            nextButtonStyle: { display: "none" },
+            prevButtonStyle: { display: "none" },
+            pagingDotsStyle: { display: "none" },
+          }}
+        >
+          {[...new Set(photos)].map((photo, index) => (
+            <img
+              className="max-h-screen w-screen object-contain"
+              key={index}
+              src={photo}
+              alt="carousel"
+              style={{ height: "auto" }}
+            />
+          ))}
+        </Carousel>
+      </div>
+    </PasswordProtection>
   );
 }

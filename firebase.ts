@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
-  apiKey: "AIzaSyBLN6EIpDGe0l0cDzMZEZ7mw2FdytyFW7o",
+  apiKey: process.env.NEXT_PUBLIC_FIRE_BASE_API_KEY,
   authDomain: "photo-boot-6881b.firebaseapp.com",
   projectId: "photo-boot-6881b",
   storageBucket: "photo-boot-6881b.appspot.com",
   messagingSenderId: "21082021934",
-  appId: "1:21082021934:web:62acdc365a7c6c5b7ebfbf",
+  appId: process.env.NEXT_PUBLIC_FIRE_BASE_APP_ID,
 };
 
 // Initialize Firebase
