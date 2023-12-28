@@ -7,6 +7,7 @@ import {
   Fragment,
   ReactNode,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 
@@ -27,6 +28,12 @@ export const PasswordProtection = ({ children }: Properties) => {
       setPassword(value),
     []
   );
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      setCheckPasswordStatus("success");
+    }
+  }, []);
 
   const checkPassword = useCallback(
     async (event: FormEvent) => {

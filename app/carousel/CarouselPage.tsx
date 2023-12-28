@@ -1,11 +1,9 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Carousel from "nuka-carousel";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { PasswordProtection } from "@/components/PasswordProtection";
-import Image from "next/image";
 
 export default function CarouselPage() {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -37,25 +35,27 @@ export default function CarouselPage() {
               pagingDotsStyle: { display: "none" },
             }}
           >
-            {[...new Set(photos)].map((photo, index) => (
-              <div
-                key={index}
-                className="w-full h-full flex justify-center items-center"
-              >
+            {[...new Set(photos)].map((photo, index) => {
+              return (
                 <div
-                  style={{
-                    height: "auto",
-                    width: "1000px",
-                    backgroundPosition: "50% 50%",
-                    backgroundRepeat: "no-repeat",
-                    aspectRatio: "1/1",
-                    backgroundSize: "contain",
-                    backgroundImage:
-                      "url('" + photo.replace(/(\r\n|\n|\r)/gm, "") + "')",
-                  }}
-                />
-              </div>
-            ))}
+                  key={index}
+                  className="w-full h-full flex justify-center items-center"
+                >
+                  <div
+                    style={{
+                      height: "auto",
+                      width: "1000px",
+                      backgroundPosition: "50% 50%",
+                      backgroundRepeat: "no-repeat",
+                      aspectRatio: "1/1",
+                      backgroundSize: "contain",
+                      backgroundImage:
+                        "url('" + photo.replace(/(\r\n|\n|\r)/gm, "") + "')",
+                    }}
+                  />
+                </div>
+              );
+            })}
           </Carousel>
         </div>
       </PasswordProtection>
