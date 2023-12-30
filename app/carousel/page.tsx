@@ -51,7 +51,7 @@ export default function CarouselPage() {
                     aspectRatio: "1/1",
                     backgroundSize: "contain",
                     backgroundImage:
-                      "url('" + photo.replace(/(\r\n|\n|\r)/gm, "") + "')",
+                      "url('" + photo?.replace(/(\r\n|\n|\r)/gm, "") + "')",
                   }}
                 />
               </div>

@@ -14,6 +14,7 @@
     "next": "14.0.4",
     "nuka-carousel": "7.0.0",
     "react": "18",
+    "react-confetti": "^6.1.0",
     "react-dom": "18",
     "react-webcam": "7.2.0"
   },

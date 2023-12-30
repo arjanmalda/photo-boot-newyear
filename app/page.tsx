@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { motion } from "framer-motion";
+import Confetti from "react-confetti";
 
 export default function Home() {
   const webcamRef = useRef<Webcam>(null);
@@ -12,6 +13,7 @@ export default function Home() {
     "user" | "environment"
   >("environment");
   const [imageHasBeenCaptured, setImageHasBeenCaptured] = useState(false);
+  const [isCelebrating, setIsCelebrating] = useState(false);
 
   const videoConstraints = {
     width: 1280,
@@ -29,6 +31,7 @@ export default function Home() {
     const imageSrc = capture();
     try {
       setIsLoading(true);
+      setIsCelebrating(true);
       await fetch("/api/photos", {
         method: "POST",
         headers: {
@@ -41,6 +44,9 @@ export default function Home() {
     } finally {
       setIsLoading(false);
       setImageHasBeenCaptured(false);
+      setTimeout(() => {
+        setIsCelebrating(false);
+      }, 5000);
     }
   };
 
@@ -94,6 +100,19 @@ export default function Home() {
       className="flex min-h-screen flex-col items-center justify-between p-8 bg-cover bg-center"
       style={{ backgroundImage: `url('/photo-boot-background.jpeg')` }}
     >
+      {isCelebrating && (
+        <Confetti
+          initialVelocityY={15}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            height: "100%",
+            transform: "translate(-50%)",
+          }}
+          colors={["#FFD700", "#C0C0C0", "#FFFFFF", "#8B4513", "#000000"]}
+        />
+      )}
       <button
         onClick={toggleCameraFacingMode}
         className=" p-1 rounded-md border border-white fixed bottom-1 right-1"
@@ -131,6 +150,7 @@ export default function Home() {
           <motion.div
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             whileHover={{ scale: 1.1 }}
+            className="flex flex-col items-center"
           >
             <CameraCaptureIcon />
           </motion.div>

@@ -5,7 +5,6 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { PasswordProtection } from "@/components/PasswordProtection";
 import Image from "next/image";
-import { set } from "firebase/database";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function CarouselPage() {
