@@ -112,6 +112,7 @@ export default function Home() {
           exit={{ scale: 1 }}
         >
           <Webcam
+            mirrored={videoFacingMode === "user"}
             audio={false}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
