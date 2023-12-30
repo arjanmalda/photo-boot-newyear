@@ -123,16 +123,18 @@ export default function Home() {
           />
         </motion.div>
 
-        <motion.button
+        <button
           disabled={isLoading}
           onClick={addPhoto}
-          className="[&_>_svg]:h-14 [&_>_svg]:w-14 flex justify-center py-4"
-          whileHover={{ scale: 1.2 }}
-          onHoverStart={(e) => {}}
-          onHoverEnd={(e) => {}}
+          className="[&_svg]:h-14 [&_svg]:w-14 flex justify-center py-4 -mt-24 z-10 w-full"
         >
-          <CameraCaptureIcon />
-        </motion.button>
+          <motion.div
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            whileHover={{ scale: 1.1 }}
+          >
+            <CameraCaptureIcon />
+          </motion.div>
+        </button>
 
         {cameraCanBeUsed === false && (
           <div className=" text-red-500"> Camera not available </div>
@@ -143,7 +145,7 @@ export default function Home() {
         <motion.div
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          transition={{ type: "spring", stiffness: 200, damping: 17 }}
           className="absolute w-full h-full top-0 bg-black pointer-events-none rounded-md [&>svg]:w-4 [&>svg]:h-4 flex justify-center gap-4 border-white border pt-1"
         >
           <UploadIcon />
@@ -173,6 +175,8 @@ const CameraToggleIcon = () => (
 const CameraCaptureIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <path
+      strokeWidth={10}
+      stroke="#000"
       fill="#fff"
       d="M56 0h80a24 24 0 1 1 0 48H56a8 8 0 0 0-8 8v80a24 24 0 1 1-48 0V56A56 56 0 0 1 56 0zm320 0h80a56 56 0 0 1 56 56v80a24 24 0 1 1-48 0V56a8 8 0 0 0-8-8h-80a24 24 0 1 1 0-48zM48 376v80a8 8 0 0 0 8 8h80a24 24 0 1 1 0 48H56a56 56 0 0 1-56-56v-80a24 24 0 1 1 48 0zm464 0v80a56 56 0 0 1-56 56h-80a24 24 0 1 1 0-48h80a8 8 0 0 0 8-8v-80a24 24 0 1 1 48 0zM180 128l6.2-16.4A24 24 0 0 1 208.7 96h94.7c10 0 19 6.2 22.5 15.6L332 128h36a48 48 0 0 1 48 48v160a48 48 0 0 1-48 48H144a48 48 0 0 1-48-48V176a48 48 0 0 1 48-48h36zm140 128a64 64 0 1 0-128 0 64 64 0 1 0 128 0z"
       opacity="1"
