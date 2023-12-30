@@ -147,7 +147,6 @@ const SavedSelection = () => {
     setIsLoading(true);
     const unsubscribe = onSnapshot(collection(db, "selection"), (snapshot) => {
       const selection = snapshot.docs.map((doc) => doc.data().photos);
-      console.log(selection);
 
       setPhotos(selection[0]);
     });
