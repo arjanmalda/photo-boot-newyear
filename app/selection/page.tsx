@@ -61,12 +61,12 @@ export default function CarouselPage() {
           <h1 className="text-4xl font-bold mb-4">Loading...</h1>
         ) : showSelection ? undefined : (
           <Fragment>
-            <h1 className="text-4xl font-bold mb-4 mt-10">Alle foto&apos;s</h1>
+            <h1 className="text-4xl font-bold mb-4 mt-10">All photos</h1>
             <ul className="grid grid-cols-6 gap-2 mb-4">
               {photos.map((photo, index) => (
-                <AnimatePresence key={photo.slice(0, 10)}>
+                <AnimatePresence key={photo.slice(-10)}>
                   <motion.button
-                    key={photo.slice(0, 10)}
+                    key={photo.slice(-10)}
                     onClick={() => addPhotoToSelection(photo)}
                     className="h-72 overflow-hidden rounded-xl"
                   >
@@ -81,12 +81,12 @@ export default function CarouselPage() {
                 </AnimatePresence>
               ))}
             </ul>
-            <h1 className="text-4xl font-bold mb-4">Nieuwe selectie</h1>
+            <h1 className="text-4xl font-bold mb-4">New selection</h1>
             <ul className="grid grid-cols-6 gap-2">
               {selectedPhotos.map((photo, index) => (
-                <AnimatePresence key={photo.slice(0, 10)}>
+                <AnimatePresence key={photo.slice(-10)}>
                   <motion.button
-                    key={photo.slice(0, 10)}
+                    key={photo.slice(-10)}
                     onClick={() => removePhotoFromSelection(photo)}
                     className="h-72 overflow-hidden rounded-xl"
                     initial={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export default function CarouselPage() {
               }}`}
               disabled={selectedPhotos.length === 0 || isLoading}
             >
-              Selectie opslaan
+              Save selection
             </button>
           </Fragment>
         )}
@@ -122,7 +122,7 @@ export default function CarouselPage() {
           }}`}
           onClick={() => setShowSelection((prev) => !prev)}
         >
-          Opgeslagen selectie {showSelection ? "verbergen" : "tonen"}
+          {showSelection ? "Hide" : "Show"} saved selection
         </button>
         <AnimatePresence key={selectedPhotos[0]}>
           <motion.div
@@ -167,9 +167,9 @@ const SavedSelection = () => {
             <h1 className="text-4xl font-bold mb-4">Opgeslagen selectie</h1>
             <ul className="grid grid-cols-6 gap-2">
               {photos?.map((photo, index) => (
-                <AnimatePresence key={photo.slice(0, 10)}>
+                <AnimatePresence key={photo.slice(-10)}>
                   <motion.button
-                    key={photo.slice(0, 10)}
+                    key={photo.slice(-10)}
                     className="h-72 overflow-hidden rounded-xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

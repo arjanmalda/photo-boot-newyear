@@ -10,9 +10,10 @@ export default function CarouselPage() {
   const [photos, setPhotos] = useState<string[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "photos"), (snapshot) => {
-      const newPhotos = snapshot.docs.map((doc) => doc.data().photo);
-      setPhotos(newPhotos);
+    const unsubscribe = onSnapshot(collection(db, "selection"), (snapshot) => {
+      const selection = snapshot.docs.map((doc) => doc.data().photos);
+
+      setPhotos(selection[0]);
     });
 
     return () => unsubscribe();
@@ -31,8 +32,8 @@ export default function CarouselPage() {
             animation="fade"
             wrapAround
             defaultControlsConfig={{
-              nextButtonStyle: { display: "none" },
-              prevButtonStyle: { display: "none" },
+              nextButtonText: "-->",
+              prevButtonText: "<--",
               pagingDotsStyle: { display: "none" },
             }}
           >
