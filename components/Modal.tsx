@@ -91,7 +91,7 @@ export const Modal = ({
         {onClose ? (
           <button
             className={cx(
-              "z-10 absolute flex h-4 w-4 cursor-pointer items-center justify-center border-0 bg-primary-50 bg-opacity-50 transition-all hover:bg-opacity-100 md:h-12 md:w-12",
+              "z-10 absolute flex h-6 w-6 cursor-pointer items-center justify-center border-0 bg-primary-50 bg-opacity-50 transition-all hover:bg-opacity-100 md:h-12 md:w-12",
               padding === "small"
                 ? "right-2.5 top-2.5 md:right-5 md:top-5"
                 : "right-5 top-5"

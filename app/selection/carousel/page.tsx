@@ -27,8 +27,6 @@ export default function CarouselPage() {
       <PasswordProtection>
         <div className=" rounded-lg border-8 border-[#cfa159] w-ful overflow-hidden w-full flex col justify-center h-full items-center [&>*]:flex [&>*]:justify-center [&>*]:items-center[&>*] [&>*]:w-full">
           <Carousel
-            autoplay
-            autoplayInterval={10_000}
             animation="fade"
             wrapAround
             defaultControlsConfig={{

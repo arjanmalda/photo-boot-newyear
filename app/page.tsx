@@ -55,8 +55,10 @@ export default function Home() {
       setIsLoading(false);
       setTimeout(() => {
         setIsCelebrating(false);
-        setThumbnail(undefined);
       }, 1500);
+      setTimeout(() => {
+        setThumbnail(null);
+      }, 4000);
     }
   };
 
