@@ -15,10 +15,5 @@ export async function POST(request: Request) {
 }
 
 function validatePagePassword(pageSlug: string, password: string) {
-  return (
-    (pageSlug === "carousel" &&
-      password === process.env.PASSWORD_PROTECTION_CAROUSEL) ||
-    (pageSlug === "photos" &&
-      password === process.env.PASSWORD_PROTECTION_PHOTOS)
-  );
+  return password === process.env.PASSWORD_PROTECTION_PHOTOS;
 }
