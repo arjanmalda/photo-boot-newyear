@@ -2,8 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Confetti from "react-confetti";
+import { set } from "firebase/database";
+import { Modal } from "@/components/Modal";
 
 export default function Home() {
   const webcamRef = useRef<Webcam>(null);
@@ -14,6 +16,8 @@ export default function Home() {
   >("environment");
   const [imageHasBeenCaptured, setImageHasBeenCaptured] = useState(false);
   const [isCelebrating, setIsCelebrating] = useState(false);
+  const [thumbnail, setThumbnail] = useState<string | null>();
+  const [modal, setModal] = useState<string>();
 
   const videoConstraints = {
     width: 1280,
@@ -23,15 +27,21 @@ export default function Home() {
 
   const capture = () => {
     const imageSrc = webcamRef.current?.getScreenshot();
-    setImageHasBeenCaptured(true);
+    setThumbnail(imageSrc);
     return imageSrc;
   };
 
   const addPhoto = async () => {
     const imageSrc = capture();
     try {
-      setIsLoading(true);
+      setImageHasBeenCaptured(true);
       setIsCelebrating(true);
+
+      setTimeout(() => {
+        setImageHasBeenCaptured(false);
+      }, 300);
+
+      setIsLoading(true);
       await fetch("/api/photos", {
         method: "POST",
         headers: {
@@ -43,10 +53,10 @@ export default function Home() {
       console.error("Error adding document: ", error);
     } finally {
       setIsLoading(false);
-      setImageHasBeenCaptured(false);
       setTimeout(() => {
         setIsCelebrating(false);
-      }, 5000);
+        setThumbnail(undefined);
+      }, 1500);
     }
   };
 
@@ -102,7 +112,8 @@ export default function Home() {
     >
       {isCelebrating && (
         <Confetti
-          initialVelocityY={15}
+          gravity={0.9}
+          initialVelocityY={9}
           style={{
             position: "absolute",
             top: 0,
@@ -123,9 +134,7 @@ export default function Home() {
         <motion.div
           initial={{ scale: 1, opacity: 1, background: "transparent" }}
           animate={{
-            zIndex: imageHasBeenCaptured ? 3 : 0,
-            scale: imageHasBeenCaptured ? 1.01 : 1,
-            opacity: imageHasBeenCaptured ? 0.5 : 1,
+            opacity: imageHasBeenCaptured ? 0.3 : 1,
           }}
           transition={{ duration: 0.1, ease: "easeInOut" }}
           exit={{ scale: 1 }}
@@ -141,6 +150,26 @@ export default function Home() {
             style={{ borderRadius: "2.4rem", boxShadow: "0 0 0 5px #fff" }}
           />
         </motion.div>
+        <div className="relative w-[90%] flex justify-center">
+          <AnimatePresence key={thumbnail}>
+            {thumbnail && (
+              <motion.button
+                className="fixed bottom-1 right-1 z-10"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                onClick={() => setModal(thumbnail)}
+              >
+                <img
+                  src={thumbnail}
+                  alt="thumbnail"
+                  className="w-16 h-16 rounded-md bg-cover"
+                />
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
 
         <button
           disabled={isLoading}
@@ -160,7 +189,7 @@ export default function Home() {
           <div className=" text-red-500"> Camera not available </div>
         )}
       </div>
-      <div className="relative w-[90%] flex justify-center">
+      <div className="relative w-[90%] flex justify-center fixed bottom-2">
         <input type="file" accept="image/*" onChange={handleFileUpload} />
         <motion.div
           whileHover={{ scale: 1.2 }}
@@ -171,6 +200,23 @@ export default function Home() {
           <UploadIcon />
         </motion.div>
       </div>
+      <AnimatePresence key={modal}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: modal ? 1 : 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 17 }}
+        >
+          {!!modal && (
+            <Modal onClose={() => setModal(undefined)}>
+              <div className="flex flex-col items-center justify-center">
+                <h1 className="text-4xl font-bold mb-4">Foto</h1>
+                <img src={modal} alt="modal" className="w-full" />
+              </div>
+            </Modal>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </main>
   );
 }
