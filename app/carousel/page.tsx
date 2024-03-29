@@ -17,6 +17,7 @@ export default function CarouselPage() {
 
     return () => unsubscribe();
   }, []);
+  console.log([...new Set(photos)]);
 
   return (
     <main
